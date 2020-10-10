@@ -1,6 +1,8 @@
 import astropy.units as u
 import numpy as np
 from astropy.constants import c
+import matplotlib
+matplotlib.rcParams['text.usetex'] = True
 import matplotlib.pyplot as plt
 
 import naima
@@ -13,7 +15,7 @@ from naima.models import (
 
 # Blob parameters
 B = 1.e-3 * u.Gauss # magnetic field
-R = 3.e16 * u.cm # radius
+R = 1.e18 * u.cm # radius
 Gamma = 20. # bulk Lorentz factor
 theta = 5*u.degree # viewing angle
 delta = 1. / (Gamma * ( 1 - np.sqrt(1-Gamma**-2) * np.cos(theta) ))
@@ -101,7 +103,7 @@ for i, seed, ls in zip(
     ax.loglog(
         energy,
         EIC.sed(energy, distance=0 * u.cm, seed=seed),
-        lw=2,
+        lw=1,
         c=naima.plot.color_cycle[i + 1],
         label=seed,
         ls=ls,
@@ -130,7 +132,7 @@ ax.loglog(
 )
 
 ax.legend(loc="lower right", frameon=False)
-ax.set_xlabel("E, eV")
-ax.set_ylabel("L, erg/s")
+ax.set_xlabel(r'\textbf{E, eV}')
+ax.set_ylabel(r'\boldmath $ \nu L_\nu, \rm\, erg/s$')
 figure.tight_layout()
 figure.savefig("SSC+EIC.png")
