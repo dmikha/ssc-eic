@@ -48,7 +48,7 @@ comoving = ExponentialCutoffBrokenPowerLaw(
 lab = ExponentialCutoffBrokenPowerLaw(
     amplitude = amplitude * delta ** 3,
     e_0 = e_0 * delta,
-    e_break = e_break,
+    e_break = e_break * delta,
     alpha_1 = alpha_1,
     alpha_2 = alpha_2,
     e_cutoff = e_cutoff * delta,
@@ -57,14 +57,13 @@ lab = ExponentialCutoffBrokenPowerLaw(
 
 
 # blob emission
-#eopts = {"Eemax": Emax, "Eemin": Emin}
 
 SYN = Synchrotron(comoving, B=B, Eemax=Emax, Eemin=Emin)
 
 # Compute photon density spectrum from synchrotron emission 
 Esy = np.logspace( np.log10(((Emin/u.TeV)**2*(B/u.Gauss)).cgs ) + 3 , np.log10(((e_cutoff/u.TeV)**2*(B/u.Gauss)).cgs) + 5, 300) * u.eV
 Lsy = SYN.flux(Esy, distance=0 * u.cm)  # use distance 0 to get luminosity
-phn_sy = Lsy / (4 * np.pi * R ** 2 * c) * 2.24
+phn_sy = Lsy * 2.25 / (4 * np.pi * R ** 2 * c)
 
 SSC = InverseCompton(
     comoving,
@@ -90,9 +89,9 @@ figure, ax = plt.subplots()
 
 # Plot the computed model emission
 energy = np.logspace(-3, 13, 100) * u.eV
-SYN_plot = SYN.sed(energy / delta, distance = 0.) * delta**2
-SSC_plot = SSC.sed(energy / delta, distance = 0.) * delta**2
-EIC_plot = EIC.sed(energy, distance = 0.)
+SYN_plot = SYN.sed(energy / delta, distance = 0 * u.cm) * delta**2
+SSC_plot = SSC.sed(energy / delta, distance = 0 * u.cm) * delta**2
+EIC_plot = EIC.sed(energy, distance = 0 * u.cm)
 ylim_max = max(SYN_plot.max().value,SSC_plot.max().value,EIC_plot.max().value)
 ax.set_ylim(ylim_max/1.e10, ylim_max*5)
 
@@ -101,7 +100,7 @@ for i, seed, ls in zip(
 ):
     ax.loglog(
         energy,
-        EIC.sed(energy, distance=0., seed=seed),
+        EIC.sed(energy, distance=0 * u.cm, seed=seed),
         lw=2,
         c=naima.plot.color_cycle[i + 1],
         label=seed,
