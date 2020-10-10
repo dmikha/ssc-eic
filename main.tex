@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{bm,pgffor}
+\makeatletter
+
+\def\myd{\mathrm{d}}
+%\def\myd{d}
+\def\dif{\@ifnextchar[{\@with}{\@without}}
+
+\def\@with[#1]#2{
+  \ensuremath{
+    \mathchoice
+    {\frac{\foreach \x in {#2}{\myd\x\,}}{\foreach \x in {#1}{\myd\x\,}}}%
+    {{\foreach \x in {#2}{\myd\x\,}}/{\foreach \x in {#1}{\myd\x\,}}}%
+    {{\foreach \x in {#2}{\myd\x\,}}/{\foreach \x in {#1}{\myd\x\,}}}%
+    {{\foreach \x in {#2}{\myd\x\,}}/{\foreach \x in {#1}{\myd\x\,}}}
+  }
+}
+
+\def\@without#1{
+  \ensuremath{%
+    \ifx\hfuzz#1\hfuzz
+    \myd
+    \else
+    \foreach \x in {#1}{\myd\x\,}
+    \fi
+    }
+}
+
+\makeatother
+
+\def\be{\begin{equation}}
+\def\ee{\end{equation}}
+\newcommand{\ve}{\varepsilon}
+\begin{document}
+If high-energy particles are confined in a relativistically moving blob, then in the blob co-moving frame the phase-space distribution function is
+%
+\be
+f(t', \bm r', \bm p') = \delta(\bm r' - \bm r_0') \frac{g(\ve')}{4\pi p'\ve'}\,,
+\ee
+%
+where \(t'\) and \(\bm r'\) are space-time coordinates; \(\bm p'\) and \(\ve'=\sqrt{\bm p'^2+m^2}\) are particle momentum and energy (here and below \(c=1\)). Particle distribution in the co-moving frame is assumed to be isotropic, \(\dif[\ve']{N}=g(\ve')\).  In the laboratory system the distribution function is
+%
+\be
+f(t, \bm r, \bm p) = f\big(t'(t,\bm r), \bm r'(t,\bm r), \bm p'(\bm p)\big)\,,
+\ee
+%
+where the primed and non-primed quantities are related by the Lorentz transformation:
+%
+\be
+\ve' = \Gamma (\ve - \beta p_x)\,,
+\ee
+\be
+t' = \Gamma (t - \beta x)\,,
+\ee
+and
+\be
+x' = \Gamma (x - \beta t)\,.
+\ee
+%
+Here we assumed that the blob moves along the \(x\) axis with Lorentz factor \(\Gamma\) (\(\beta=\sqrt{1-\Gamma^{-2}}\)).
+
+In the laboratory frame the production of gamma rays via inverse Compton scattering can be computed as
+%
+\be
+\dif[t,\Omega,\omega,V]{n} = c\int  \dif[\omega]{\sigma_{\rm ic}} \bm p^2 f(t,\bm r, p\bm n_{\tiny \Omega})\dif{n_{\rm ph},\ve}\,,
+\ee
+%
+where \(\bm n_{\tiny \Omega}\) is a unit vector determined by the solid angle element \(\Omega\).  For an observer located in the direction of \(\bm n_{\tiny \Omega}\), the emission detection time is
+%
+\be
+t_{\rm det}=t-\bm r \bm n_{\Omega}\,.
+\ee
+%
+Thus, converting from the production  to the detection rate, we obtain
+%
+\be
+\dif[t_{\rm det},\Omega,\omega]{N} = c\int  \dif[\omega]{\sigma_{\rm ic}}n_{\rm ph} \bm p^2 f(t_{\rm det}+\bm r\bm n_{\Omega},\bm r, p\bm n_{\tiny \Omega})\dif{n_{\rm ph},\ve,V}\,.
+\ee
+%
+
+If we deal with ultra relativistic particles, \(\ve'\gg m\), then the above equation can be further simplified: \(\bm p'^2=\ve'^2\). For particles with the momentum in the direction to the observer, \(\bm p = \ve \bm n_{\Omega}\),  particle energy in the co-moving frame is determined by the  Doppler factor \(\delta=1/(\Gamma(1-\beta\cos\theta))\): namely, \(\ve'=\ve/\delta\). Here \(\cos\theta=n_{\Omega,x}\). The distribution function in the laboratory system is
+%
+\be
+f(t,\bm r,\bm p) = f'(t',\bm r', \bm p')\,,
+\ee
+%
+where
+%
+\be
+\ve' = \frac\ve\delta\, \quad t'=\Gamma(t-\beta x), \quad y'=y, \quad z'=z\,,
+\ee
+and
+\be
+x'=\Gamma(x-\beta t)=\Gamma(x-\beta t_{\rm det} -\beta x \cos\theta)=\frac x\delta - \Gamma\beta t_{\rm det}\,.
+\ee
+Thus, we obtain
+%
+\be
+f(t,\bm r,\bm p) = \frac{\delta^3g(\ve/\delta)}{4\pi \ve^2} \delta(\bm r-\bm r_0)\,,
+\ee
+%
+and the IC spectrum is 
+%
+\be
+\dif[t_{\rm det},\Omega,\omega]{N} = \frac{c\delta^3}{4\pi}\int \dif[\omega]{\sigma_{\rm ic}}n_{\rm ph} g(\ve/\delta)\dif{n_{\rm ph},\ve}\,.
+\ee
+%
+
+\end{document}
