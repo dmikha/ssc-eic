@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{bm,pgffor}
+\usepackage{bm,pgffor,amsmath}
 \makeatletter
 
 \def\myd{\mathrm{d}}
@@ -91,7 +91,10 @@ where
 \ee
 and
 \be
-x'=\Gamma(x-\beta t)=\Gamma(x-\beta t_{\rm det} -\beta x \cos\theta)=\frac x\delta - \Gamma\beta t_{\rm det}\,.
+\begin{split}
+  x'=\Gamma(x-\beta t)&=\Gamma(x-\beta t_{\rm det} -\beta x \cos\theta - \beta(\bm r \bm n_\Omega -x\cos\theta))\\
+  &=\frac x\delta - \Gamma\beta t_{\rm det}-\beta(\bm r \bm n_\Omega -x\cos\theta)\,.
+\end{split}
 \ee
 Thus, we obtain
 %
