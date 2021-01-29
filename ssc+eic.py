@@ -63,7 +63,7 @@ lab = ExponentialCutoffBrokenPowerLaw(
 SYN = Synchrotron(comoving, B=B, Eemax=Emax, Eemin=Emin)
 
 # Compute photon density spectrum from synchrotron emission 
-Esy = np.logspace( np.log10(((Emin/u.TeV)**2*(B/u.Gauss)).cgs ) + 3 , np.log10(((e_cutoff/u.TeV)**2*(B/u.Gauss)).cgs) + 5, 300) * u.eV
+Esy = np.logspace( np.log10(((Emin/u.TeV)**2*(B/u.Gauss)).cgs.value ) + 3 , np.log10(((e_cutoff/u.TeV)**2*(B/u.Gauss)).cgs.value) + 5, 300) * u.eV
 Lsy = SYN.flux(Esy, distance=0 * u.cm)  # use distance 0 to get luminosity
 phn_sy = Lsy * 2.25 / (4 * np.pi * R ** 2 * c)
 
